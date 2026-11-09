@@ -23,11 +23,12 @@ All times are on 9 November 2026, PKT (UTC+5).
 | 16:31 | GitHub repository created and pushed |
 | 16:33 | Vercel project linked. Neon Postgres provisioned through the Vercel Marketplace. Schema pushed and demo data seeded |
 | 16:37 | Live on Vercel. End-to-end smoke test passing against production |
+| 16:38 to 16:44 | Browser walkthrough of every persona: sale wizard to approval to title deed, milestone report to escrow release, public verification. Fixed untranslated strings in Arabic. Screenshots added |
 
 ## Totals
 
 - Plan approved to live production URL: 58 minutes, including about 26 minutes waiting on account sign-ins
-- Agent working time: about 32 minutes
+- Agent working time: about 32 minutes to go live, plus about 7 minutes of UI walkthrough and polish
 - Planning to production-ready build: about 25 minutes of agent time
 - Size: about 5,400 lines of TypeScript and TSX across 69 source files, 11 database models, 33 routes
 - Quality gates: strict TypeScript, ESLint, Vitest unit tests, a scripted end-to-end API test, browser QA

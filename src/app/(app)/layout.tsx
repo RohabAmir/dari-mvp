@@ -68,8 +68,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <div className="md:sticky md:top-22">
             <NavLinks items={items} />
             <div className="mt-6 hidden rounded-2xl bg-sage-mist p-4 text-xs text-ink-soft md:block">
-              <p className="font-medium text-ink">Demo environment</p>
-              <p className="mt-1">Payments and UAE Pass are simulated. Data resets when the demo is reseeded.</p>
+              <p className="font-medium text-ink">{t.demoTitle}</p>
+              <p className="mt-1">{t.demoBody}</p>
             </div>
           </div>
         </aside>

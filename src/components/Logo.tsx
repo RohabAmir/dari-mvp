@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getDict } from "@/lib/locale";
 
 export function LogoMark({ className = "h-9 w-9" }: { className?: string }) {
   return (
@@ -10,7 +11,8 @@ export function LogoMark({ className = "h-9 w-9" }: { className?: string }) {
   );
 }
 
-export function Logo({ href = "/" }: { href?: string }) {
+export async function Logo({ href = "/" }: { href?: string }) {
+  const { t } = await getDict();
   return (
     <Link href={href} className="flex items-center gap-2.5">
       <LogoMark />
@@ -18,7 +20,7 @@ export function Logo({ href = "/" }: { href?: string }) {
         <span className="block text-lg font-bold tracking-tight text-ink">
           Dari<span className="text-teal">-MVP</span>
         </span>
-        <span className="block text-[11px] text-metal">Digital real estate ecosystem</span>
+        <span className="block text-[11px] text-metal">{t.tagline}</span>
       </span>
     </Link>
   );

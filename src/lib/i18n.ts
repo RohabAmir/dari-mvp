@@ -106,6 +106,8 @@ const en = {
   sold: "Sold",
   available: "Available",
   language: "العربية",
+  demoTitle: "Demo environment",
+  demoBody: "Payments and UAE Pass are simulated. Data resets when the demo is reseeded.",
 };
 
 export type Dict = typeof en;
@@ -216,6 +218,8 @@ const ar: Dict = {
   sold: "مباعة",
   available: "متاحة",
   language: "English",
+  demoTitle: "بيئة تجريبية",
+  demoBody: "المدفوعات والهوية الرقمية محاكاة. تُعاد البيانات عند إعادة تهيئة العرض.",
 };
 
 export const dictionaries: Record<Locale, Dict> = { en, ar };

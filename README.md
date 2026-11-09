@@ -20,6 +20,16 @@ Built end to end with an AI coding agent in under an hour, from approved plan to
 
 Also included: English and Arabic with full right-to-left layout, role-based access, an application history timeline, and a JSON REST API.
 
+## Screenshots
+
+| | |
+| --- | --- |
+| ![Persona login](docs/screenshots/login.png) Persona login (simulated UAE Pass) | ![Owner dashboard](docs/screenshots/dashboard-owner.png) Owner dashboard |
+| ![Wizard review and pay](docs/screenshots/wizard-review.png) Sale wizard, review and pay step | ![Review queue](docs/screenshots/review-queue.png) Registry review queue |
+| ![Application review](docs/screenshots/review-detail.png) Reviewer decision with automatic checks | ![Milestone release](docs/screenshots/review-milestones.png) Milestone report and escrow release |
+| ![Project escrow](docs/screenshots/project-escrow.png) Developer project, milestones and escrow ledger | ![Properties](docs/screenshots/properties.png) Ownership portfolio |
+| ![Certificate verification](docs/screenshots/verify.png) Public certificate verification | ![Arabic dashboard](docs/screenshots/dashboard-arabic.png) Arabic, right-to-left |
+
 ## How the pieces fit
 
 ```mermaid
