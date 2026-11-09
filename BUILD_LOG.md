@@ -19,9 +19,15 @@ All times are on 9 November 2026, PKT (UTC+5).
 | 15:59 | Typecheck, lint and 13 unit tests passing |
 | 16:00 | End-to-end API smoke test of all three features passing. All 24 pages render for every persona |
 | 16:04 | Production build passing (33 routes). Browser QA of the UI flows started |
+| 16:04 to 16:30 | Waiting on the developer to sign in to GitHub and Vercel and accept the Neon terms |
+| 16:31 | GitHub repository created and pushed |
+| 16:33 | Vercel project linked. Neon Postgres provisioned through the Vercel Marketplace. Schema pushed and demo data seeded |
+| 16:37 | Live on Vercel. End-to-end smoke test passing against production |
 
 ## Totals
 
+- Plan approved to live production URL: 58 minutes, including about 26 minutes waiting on account sign-ins
+- Agent working time: about 32 minutes
 - Planning to production-ready build: about 25 minutes of agent time
 - Size: about 5,400 lines of TypeScript and TSX across 69 source files, 11 database models, 33 routes
 - Quality gates: strict TypeScript, ESLint, Vitest unit tests, a scripted end-to-end API test, browser QA

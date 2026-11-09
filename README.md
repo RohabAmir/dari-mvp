@@ -2,7 +2,9 @@
 
 A working MVP of a digital real estate registry, modelled on the Abu Dhabi DARI platform. It replicates the three services the business runs on: registering property transactions, protecting off-plan buyers with escrow, and issuing verifiable ownership certificates.
 
-Built end to end with an AI coding agent in one working session. See [BUILD_LOG.md](BUILD_LOG.md) for the timeline.
+**Live demo: https://dari-mvp-three.vercel.app** (pick a persona on the login page, no sign-up needed)
+
+Built end to end with an AI coding agent in under an hour, from approved plan to live URL. See [BUILD_LOG.md](BUILD_LOG.md) for the timeline.
 
 > Demonstration product. Payments and UAE Pass login are simulated. Not affiliated with any government entity.
 
