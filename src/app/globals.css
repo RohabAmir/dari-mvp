@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-tajawal), ui-sans-serif, system-ui, sans-serif;
+
+  --color-sage: #a4c89a;
+  --color-sage-soft: #dce6d8;
+  --color-sage-mist: #edf3eb;
+  --color-celadon: #b8ceb1;
+  --color-teal: #1c999b;
+  --color-teal-dark: #019f9f;
+  --color-teal-light: #effbfc;
+  --color-ink: #130f26;
+  --color-ink-soft: #342d3d;
+  --color-metal: #6c7281;
+  --color-line: #ebeef3;
+  --color-disabled: #ced1d6;
+  --color-canvas: #f8f8f8;
+  --color-danger: #d2374f;
+  --color-danger-light: #ffebee;
+  --color-success: #12b78e;
+  --color-success-dark: #138266;
+  --color-success-light: #edfdf9;
+  --color-warning: #a76708;
+  --color-warning-light: #fffaeb;
+  --color-info: #1270b4;
+  --color-info-light: #ebf7ff;
+  --color-beige: #eae8d9;
+}
+
+html {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.card {
+  @apply rounded-2xl border border-line bg-white;
+}
+
+.input {
+  @apply w-full rounded-xl border border-disabled bg-white px-4 py-2.5 text-sm text-ink outline-none transition placeholder:text-metal/70 focus:border-teal focus:ring-2 focus:ring-teal/20 disabled:bg-canvas;
+}
+
+.label {
+  @apply mb-1.5 block text-sm font-medium text-ink-soft;
+}
+
+@utility btn {
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-ink text-white hover:bg-ink-soft;
+}
+@utility btn-teal {
+  @apply btn bg-teal text-white hover:bg-teal-dark;
+}
+@utility btn-outline {
+  @apply btn border border-disabled bg-white text-ink hover:border-ink;
+}
+@utility btn-danger {
+  @apply btn bg-danger text-white hover:bg-[#b23044];
+}
+@utility btn-ghost {
+  @apply btn text-ink-soft hover:bg-sage-mist;
+}
+
+.table-base {
+  @apply w-full text-sm;
+}
+.table-base th {
+  @apply border-b border-line px-4 py-3 text-start text-xs font-medium tracking-wide text-metal uppercase;
+}
+.table-base td {
+  @apply border-b border-line px-4 py-3.5;
+}
+.table-base tr:last-child td {
+  @apply border-b-0;
+}

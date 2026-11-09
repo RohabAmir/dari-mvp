@@ -1,0 +1,247 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  APPLICANT
+  DEVELOPER
+  REVIEWER
+}
+
+enum ApplicationType {
+  FIRST_SALE
+  SELL_PURCHASE
+  CERTIFICATE
+}
+
+enum ApplicationStatus {
+  DRAFT
+  SUBMITTED
+  RETURNED
+  REJECTED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum CertificateType {
+  TITLE_DEED
+  OWNERSHIP
+  VALUATION
+}
+
+enum ProjectStatus {
+  PENDING
+  ACTIVE
+  COMPLETED
+  REJECTED
+}
+
+enum MilestoneStatus {
+  PLANNED
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum EscrowDirection {
+  INFLOW
+  OUTFLOW
+}
+
+model User {
+  id         String   @id @default(cuid())
+  name       String
+  nameAr     String
+  email      String   @unique
+  emiratesId String   @unique
+  phone      String
+  role       Role
+  company    String?
+  createdAt  DateTime @default(now())
+
+  properties   Property[]      @relation("PropertyOwner")
+  applications Application[]   @relation("Applicant")
+  reviews      Application[]   @relation("Reviewer")
+  events       ApplicationEvent[]
+  projects     Project[]
+  certificates Certificate[]
+  payments     EscrowTransaction[] @relation("EscrowPayer")
+}
+
+model Project {
+  id            String        @id @default(cuid())
+  name          String
+  nameAr        String
+  community     String
+  district      String
+  totalUnits    Int
+  completionPct Int           @default(0)
+  status        ProjectStatus @default(PENDING)
+  escrowBank    String
+  reviewNote    String?
+  startDate     DateTime
+  handoverDate  DateTime
+  developerId   String
+  developer     User          @relation(fields: [developerId], references: [id])
+  createdAt     DateTime      @default(now())
+
+  properties Property[]
+  escrow     EscrowAccount?
+  milestones Milestone[]
+}
+
+model Property {
+  id           String    @id @default(cuid())
+  unitNumber   String
+  plotNumber   String
+  type         String
+  bedrooms     Int
+  areaSqm      Float
+  marketValue  Float
+  community    String
+  district     String
+  isOffPlan    Boolean   @default(false)
+  ownerId      String?
+  owner        User?     @relation("PropertyOwner", fields: [ownerId], references: [id])
+  projectId    String?
+  project      Project?  @relation(fields: [projectId], references: [id])
+  createdAt    DateTime  @default(now())
+
+  applications Application[]
+  certificates Certificate[]
+  escrowTxns   EscrowTransaction[]
+
+  @@unique([plotNumber, unitNumber])
+}
+
+model Application {
+  id          String            @id @default(cuid())
+  reference   String            @unique
+  type        ApplicationType
+  status      ApplicationStatus @default(DRAFT)
+  currentStep Int               @default(0)
+  data        Json              @default("{}")
+  salePrice   Float?
+  feeTotal    Float             @default(0)
+  propertyId  String?
+  property    Property?         @relation(fields: [propertyId], references: [id])
+  applicantId String
+  applicant   User              @relation("Applicant", fields: [applicantId], references: [id])
+  reviewerId  String?
+  reviewer    User?             @relation("Reviewer", fields: [reviewerId], references: [id])
+  submittedAt DateTime?
+  completedAt DateTime?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  events      ApplicationEvent[]
+  documents   Document[]
+  payment     Payment?
+  certificate Certificate?
+}
+
+model ApplicationEvent {
+  id            String             @id @default(cuid())
+  applicationId String
+  application   Application        @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  actorId       String
+  actor         User               @relation(fields: [actorId], references: [id])
+  fromStatus    ApplicationStatus?
+  toStatus      ApplicationStatus
+  comment       String?
+  createdAt     DateTime           @default(now())
+}
+
+model Document {
+  id            String      @id @default(cuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  kind          String
+  fileName      String
+  sizeBytes     Int
+  createdAt     DateTime    @default(now())
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  applicationId String        @unique
+  application   Application   @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  amount        Float
+  method        String
+  status        PaymentStatus @default(PENDING)
+  receiptNo     String        @unique
+  paidAt        DateTime?
+  createdAt     DateTime      @default(now())
+}
+
+model Certificate {
+  id            String          @id @default(cuid())
+  number        String          @unique
+  type          CertificateType
+  propertyId    String
+  property      Property        @relation(fields: [propertyId], references: [id])
+  ownerId       String
+  owner         User            @relation(fields: [ownerId], references: [id])
+  applicationId String?         @unique
+  application   Application?    @relation(fields: [applicationId], references: [id])
+  issuedAt      DateTime        @default(now())
+  validUntil    DateTime
+}
+
+model EscrowAccount {
+  id            String   @id @default(cuid())
+  accountNumber String   @unique
+  bankName      String
+  projectId     String   @unique
+  project       Project  @relation(fields: [projectId], references: [id])
+  createdAt     DateTime @default(now())
+
+  transactions EscrowTransaction[]
+}
+
+model Milestone {
+  id          String          @id @default(cuid())
+  projectId   String
+  project     Project         @relation(fields: [projectId], references: [id])
+  order       Int
+  title       String
+  targetPct   Int
+  releasePct  Int
+  status      MilestoneStatus @default(PLANNED)
+  reportNote  String?
+  reportedPct Int?
+  reviewNote  String?
+  submittedAt DateTime?
+  decidedAt   DateTime?
+
+  releases EscrowTransaction[]
+
+  @@unique([projectId, order])
+}
+
+model EscrowTransaction {
+  id          String          @id @default(cuid())
+  accountId   String
+  account     EscrowAccount   @relation(fields: [accountId], references: [id])
+  direction   EscrowDirection
+  amount      Float
+  description String
+  propertyId  String?
+  property    Property?       @relation(fields: [propertyId], references: [id])
+  payerId     String?
+  payer       User?           @relation("EscrowPayer", fields: [payerId], references: [id])
+  milestoneId String?
+  milestone   Milestone?      @relation(fields: [milestoneId], references: [id])
+  createdAt   DateTime        @default(now())
+}
