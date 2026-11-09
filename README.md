@@ -82,7 +82,7 @@ Requires Node.js 20+. No Docker needed; the database is an embedded Postgres.
 
 ```bash
 npm install
-cp .env.example .env    # then set DATABASE_URL/DIRECT_URL to the local values below
+cp .env.example .env    # then use the local values below
 npm run db:local        # terminal 1: Postgres on port 5433
 npm run db:push && npm run db:seed
 npm run dev             # terminal 2: http://localhost:3000
@@ -92,7 +92,7 @@ Local `.env`:
 
 ```
 DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:5433/postgres?sslmode=disable&connection_limit=1&pgbouncer=true"
-DIRECT_URL="postgresql://postgres:postgres@127.0.0.1:5433/postgres?sslmode=disable&connection_limit=1"
+DATABASE_URL_UNPOOLED="postgresql://postgres:postgres@127.0.0.1:5433/postgres?sslmode=disable&connection_limit=1"
 SESSION_SECRET="any-long-random-string"
 ```
 
@@ -133,9 +133,9 @@ curl -s localhost:3000/api/v1/properties -H "authorization: Bearer $TOKEN"
 ## Deploy (Vercel and Neon)
 
 1. Create a Neon Postgres database, either at neon.tech or through the Vercel Marketplace integration.
-2. Import the GitHub repo in Vercel and set `DATABASE_URL` (pooled, with `pgbouncer=true`), `DIRECT_URL` (direct) and `SESSION_SECRET`.
+2. Import the GitHub repo in Vercel and add `SESSION_SECRET` (the Neon integration adds `DATABASE_URL` and `DATABASE_URL_UNPOOLED` for you).
 3. Load the schema and demo data once from your machine:
-   `DATABASE_URL=... DIRECT_URL=... npx prisma db push && npm run db:seed`
+   `DATABASE_URL=... DATABASE_URL_UNPOOLED=... npx prisma db push && npm run db:seed`
 4. Deploy. Run `npm run db:seed` again any time to reset the demo.
 
 ## Fee rules (mock)
